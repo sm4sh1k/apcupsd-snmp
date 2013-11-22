@@ -98,14 +98,10 @@ my APC Back-UP RS 500.
 
 * Implement support for setting values and traps.
 
-*Feel free to contribute!* I have no intention in future development.
+*Feel free to contribute!*
 
 
 ## Important notes
 
 * Download PowerNet (APC) MIB file: 
 [powernet401.mib](http://www.michaelfmcnamara.com/files/mibs/powernet401.mib).
-
-* I'm not skilled Perl programmer, this is my first Perl script I ever wrote.
-So if you find something weird in it, please let me know about it and fix it.
-However it's working perfectly fine for me, so I hope it's ok.
