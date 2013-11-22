@@ -75,9 +75,10 @@ my $base_oid = '.1.3.6.1.4.1.318.1.1.1';
 # OIDs mapping
 my $mapping = [
 #   Apcupsd name    OID suffix  Data type           OID name
-    ['APCMODEL',    '1.1.1.0',  ASN_OCTET_STR],     # upsBasicIdentModel
+    ['MODEL',       '1.1.1.0',  ASN_OCTET_STR],     # upsBasicIdentModel
     ['UPSNAME',     '1.1.2.0',  ASN_OCTET_STR],     # upsBasicIdentName
     ['FIRMWARE',    '1.2.1.0',  ASN_OCTET_STR],     # upsAdvIdentFirmwareRevision
+    ['MANDATE',     '1.2.2.0',  ASN_OCTET_STR],     # upsAdvIdentDateOfManufacture
     ['SERIALNO',    '1.2.3.0',  ASN_OCTET_STR],     # upsAdvIdentSerialNumber
     ['TONBATT',     '2.1.2.0',  ASN_TIMETICKS],     # upsBasicBatteryTimeOnBattery
     ['BATTDATE',    '2.1.3.0',  ASN_OCTET_STR],     # upsBasicBatteryLastReplaceDate
@@ -89,6 +90,7 @@ my $mapping = [
     ['LINEV',       '3.2.1.0',  ASN_GAUGE],         # upsAdvInputLineVoltage
     ['LINEFREQ',    '3.2.4.0',  ASN_GAUGE],         # upsAdvInputFrequency
     ['LASTXFER',    '3.2.5.0',  ASN_INTEGER],       # upsAdvInputLineFailCause
+    ['STATUS',      '4.1.1.0',  ASN_INTEGER],       # upsBasicOutputStatus
     ['OUTPUTV',     '4.2.1.0',  ASN_GAUGE],         # upsAdvOutputVoltage
     ['LOADPCT',     '4.2.3.0',  ASN_GAUGE],         # upsAdvOutputLoad
     ['NOMOUTV',     '5.2.1.0',  ASN_INTEGER],       # upsAdvConfigRatedOutputVoltage
@@ -136,13 +138,27 @@ my %enums = (
         'Unknown'       => undef
     },
 
-    # ALARMDEL -> upsAdvConfigAlarm
+    # ALARMDEL => upsAdvConfigAlarm
     "$base_oid.5.2.4.0" => {
         '30 seconds'    => 1,   # timed
         '5 seconds'     => 1,   # timed
         'Always'        => 1,   # timed
         'Low Battery'   => 2,   # atLowBattery
         'No alarm'      => 3    # never
+    },
+
+    # STATUS => upsBasicOutputStatus
+    "$base_oid.4.1.1.0" => {
+        'CAL'           => 6,       # softwareBypass
+        'TRIM'          => 12,      # onSmartTrim
+        'BOOST'         => 4,       # onSmartBoost
+        'ONLINE'        => 2,       # onLine
+        'ONLINE SLAVE'  => 2,       # onLine
+        'ONBATT'        => 3,       # onBattery
+        'ONBATT SLAVE'  => 3,       # onBattery
+        'COMMLOST'      => 1,       # unknown
+        'SHUTTING DOWN' => 8,       # rebooting //7 - off
+        'ONLINE REPLACEBATT' => 10  # hardwareFailureBypass
     },
 
     # LASTXFER => upsAdvInputLineFailCause
@@ -159,7 +175,7 @@ my %enums = (
     }
 );
 
-# TODO upsBasicBatteryStatus, upsBasicOutputStatus, NOMPOWER
+# TODO upsBasicBatteryStatus, NOMPOWER
 
 
 
